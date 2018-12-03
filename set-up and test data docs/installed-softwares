@@ -1,0 +1,6 @@
+Node:           v8.12.0
+npm:            6.4.1
+Docker:         Docker version 18.09.0, build 4d60db4
+Docker Compose: docker-compose version 1.13.0, build 1719ceb
+Python:         Python 2.7.15rc1
+

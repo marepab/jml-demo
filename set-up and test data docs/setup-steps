@@ -1,0 +1,76 @@
+start fabric:
+--------------------------
+cd ~/fabric-dev-servers
+    export FABRIC_VERSION=hlfv12
+    ./startFabric.sh
+    ./createPeerAdminCard.sh
+
+Note:
+At the end of your development session, you run ~/fabric-dev-servers/stopFabric.sh and then ~/fabric-dev-servers/teardownFabric.sh
+
+create bna file:
+---------------------------
+
+go to the corresponding network folder and run this command to generate bna file
+
+composer archive create -t dir -n .
+
+
+install bna file:
+--------------------
+composer network install --card PeerAdmin@hlfv1 --archiveFile atmecs-jml-poc-network-2@0.0.2.bna
+
+start business network:
+------------------------------
+composer network start --networkName atmecs-jml-poc-network-2 --networkVersion 0.0.2 --networkAdmin admin --networkAdminEnrollSecret adminpw --card PeerAdmin@hlfv1 --file networkadmin.card
+
+
+composer card import --file networkadmin.card
+
+
+start rest server:
+--------------------
+composer-rest-server -c admin@atmecs-jml-poc-network-2 -n never -d n -w true
+
+create-angular-application:
+---------------------------
+yo hyperledger-composer:angular
+
+start-angular-application:
+--------------------------
+cd to the corresponding created application and start using below command
+npm-start
+http://localhost:4200
+
+
+{
+  "$class": "org.atmecs.poc.ApproveOfficerTest",
+  "officer": "resource:org.atmecs.poc.Officer#OFF_1",
+  "testName": "Eye test",
+  "status": "PASS",
+  "date": "2018-11-24T19:00:58.092Z"
+}
+
+{
+  "$class": "org.atmecs.poc.Officer",
+  "officerId": "OFF1",
+  "firstName": "Sam",
+  "lastName": "Curran",
+  "roleName": "PUBLIC_ORDER_OFFICER",
+  "homeOffice": "resource:org.atmecs.poc.HomeOffice#HO1",
+  "trainings": [],
+  "tests": [],
+  "compliances": []
+}
+{
+  "$class": "org.atmecs.poc.Role",
+  "roleName": "PUBLIC_ORDER_OFFICER",
+  "trainings": [],
+  "tests": [
+         {"$class": "org.atmecs.poc.Test",
+"testName" : "Eye test", 
+"expirationInMonths": 12}
+
+],
+  "compliances": []
+}
